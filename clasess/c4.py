@@ -1,4 +1,4 @@
-from pgzero.actor import Actor
+from pgzero.actor import Actor , m
 
 class MyActor(Actor):
     speedx = 5
@@ -16,4 +16,4 @@ class MyActor(Actor):
 # actor = MyActor('iron',(100,100), speed= 5)
 
 
-print(filter(lambda i:not (i.startswith('__') or i.startswith('_')),dir(MyActor))
+print(filter(lambda i:not (i.startswith('__') or i.startswith('_')),dir(MyActor)))
