@@ -1,4 +1,4 @@
-from pgzero.actor import Actor , m
+from pgzero.actor import Actor , 
 
 class MyActor(Actor):
     speedx = 5
