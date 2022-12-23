@@ -2,8 +2,6 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-
-# load data from
 def load_titanic_data():
     return pd.read_csv('ui/titanic.csv')
 # clear data
@@ -16,11 +14,11 @@ with st.spinner("Loading dataset..."):
     titanic = load_titanic_data()
     titanic = clean_data(titanic)
     
-if st.checkbox("View full data"):
+if st.sidebar.checkbox("View full dataset"):
     st.header('Titanic dataset')
     st.dataframe(titanic)
     
-if st.checkbox("View data types for each column"):
+if st.sidebar.checkbox("View data types for each column"):
     st.header('Data types for each column')
     c1,c2,c3 = st.columns(3)
     total_cols = len(titanic.columns)
@@ -42,10 +40,13 @@ if st.sidebar.checkbox("View summary statistics for each column"):
     st.header("Summary statistics for each column")
     st.dataframe(titanic.describe(include= 'all'), use_container_width= True)
 
+st.header("Univariste Column ananlysis")
 goptions = ['bar', 'histogram', 'box','violin', 'scatter']
 
-selected_col = st.sidebar.selectedbox("select a column", titanic.columns.tolist())
-graph_type = st.sidebar.selectbox("select a graph type", goptions)
+c1, c2= st.columns(2)
+
+selected_col = c1.selectbox("select a column", titanic.columns.tolist())
+graph_type = c2.sidebar.selectbox("select a graph type", goptions)
 if graph_type == goptions[0]:
     fig = px.bar(titanic, x= selected_col)
 elif graph_type == goptions[1]:
