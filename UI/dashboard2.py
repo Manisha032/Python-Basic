@@ -8,18 +8,20 @@ def load_titanic_data():
 def clean_data(df):
     df.drop(columns=['Cabin'], inplace= True)
     df['Age'].fillna(df['Age'].mean(), inplace= True)
+    df['Survived'] = df['Survived'].apply(lambda x: 'Yes' if x ==1 else 'No')
+    
     return df
     # display
 with st.spinner("Loading dataset..."):
     titanic = load_titanic_data()
     titanic = clean_data(titanic)
     
-if st.sidebar.checkbox("View full dataset"):
+if st.sidebar.checkbox("Show the titanic dataset"):
     st.header('Titanic dataset')
     st.dataframe(titanic)
     
 if st.sidebar.checkbox("View data types for each column"):
-    st.header('Data types for each column')
+    st.header("Data types for each column")
     c1,c2,c3 = st.columns(3)
     total_cols = len(titanic.columns)
     for idx,col in enumerate(titanic):
@@ -46,7 +48,7 @@ goptions = ['bar', 'histogram', 'box','violin', 'scatter']
 c1, c2= st.columns(2)
 
 selected_col = c1.selectbox("select a column", titanic.columns.tolist())
-graph_type = c2.sidebar.selectbox("select a graph type", goptions)
+graph_type = c2.selectbox("select a graph type", goptions)
 if graph_type == goptions[0]:
     fig = px.bar(titanic, x= selected_col)
 elif graph_type == goptions[1]:
