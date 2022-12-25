@@ -4,20 +4,20 @@ import streamlit as st
 
 def load_titanic_data():
     return pd.read_csv('ui/titanic.csv')
-# clear data
+
 def clean_data(df):
     df.drop(columns=['Cabin'], inplace= True)
     df['Age'].fillna(df['Age'].mean(), inplace= True)
     df['Survived'] = df['Survived'].apply(lambda x: 'Yes' if x ==1 else 'No')
     
     return df
-    # display
+    
 with st.spinner("Loading dataset..."):
     titanic = load_titanic_data()
     titanic = clean_data(titanic)
     
 if st.sidebar.checkbox("Show the titanic dataset"):
-    st.header('Titanic dataset')
+    st.header("Titanic dataset")
     st.dataframe(titanic)
     
 if st.sidebar.checkbox("View data types for each column"):
@@ -67,7 +67,7 @@ st.header("Bivariate Column analysis")
 goptions = ['scatter', 'box', 'violin']
 c1, c2, c3 =st.columns(3)
 sc1 = c1.selectbox("select a column for X", titanic.columns.tolist())
-sc1 = c1.selectbox("select a column for Y", titanic.columns.tolist())
+sc2 = c2.selectbox("select a column for Y", titanic.columns.tolist())
 graph_type = c3.selectbox("select graph type", goptions)
 try:
     if graph_type == goptions[0]:
@@ -83,7 +83,7 @@ except Exception as e :
     
 st.header("Important visualizations")
 
-#surival rate with respect to passenger class
+
 fig = px.bar(titanic, y='Pclass', x='Survived',
              facet_col= 'Sex', color= 'Surived',
              title= 'surived rate with respect to passenger class',
